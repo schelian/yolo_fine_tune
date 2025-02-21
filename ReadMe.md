@@ -10,7 +10,15 @@ Now it's a set of code to do the same using the UTA HPC cluster, using technolog
 ````conda create --name yolo_fine_tune -f environment.yml````
 
 # Every time
-````conda activate yolo_fine_tune````
+````
+conda activate yolo_fine_tune
+python yolov9_fine_tune.py
+
+# training images are read from SkyFusion-YOLOv9/train (see DAYA_YML_PATH)
+# weights are saved/loaded from runs/detect/train3/weights/best.pt (see WT_PATH)
+# test images are read from SkyFusion-YOLOv9/test (see TE_IMG_BASE_PATH)
+# results are written to results (see RESULT_IMG_BASE_PATH)
+````
 
 # When done
 ````conda deactivate````
