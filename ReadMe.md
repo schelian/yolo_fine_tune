@@ -15,8 +15,10 @@ conda activate yolo_fine_tune
 python yolov9_fine_tune.py
 
 # training images are read from SkyFusion-YOLOv9/train (see DAYA_YML_PATH)
+#   the code will download these
 # weights are saved/loaded from runs/detect/train3/weights/best.pt (see WT_PATH)
-# test images are read from SkyFusion-YOLOv9/test (see TE_IMG_BASE_PATH)
+#   one set of wts w/ 3 epochs of training were added.  can unzip
+# test images are read from data/test (see TE_IMG_BASE_PATH)
 # results are written to results (see RESULT_IMG_BASE_PATH)
 ````
 
