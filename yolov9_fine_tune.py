@@ -6,7 +6,6 @@ from urllib.request import urlretrieve
 from zipfile import ZipFile
 import time
 import torch
-import supervision as sv
 import json
 
 # constants

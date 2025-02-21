@@ -10,6 +10,8 @@ Now it's a set of code to do the same using the UTA HPC cluster, using technolog
 ````conda create --name yolo_fine_tune -f environment.yml````
 
 # Every time
+
+## Test naive model
 ````
 conda activate yolo_fine_tune
 python yolov9_fine_tune.py
@@ -20,6 +22,28 @@ python yolov9_fine_tune.py
 #   one set of wts w/ 3 epochs of training were added.  can unzip
 # test images are read from data/test (see TE_IMG_BASE_PATH)
 # results are written to results (see RESULT_IMG_BASE_PATH)
+````
+Compare results to what's in results/naive_model.  There should be no ship or airplane detected
+
+## Train/test model for 3 epochs
+````
+# unzip weights
+cd runs/detect/train3/weights/
+unzip best.pt.zip
+
+Then go back to Test naive model
+Results will be written to results
+Compare (e.g., via diff) yolo_fine_tune/results and yolo_fine_tune/results/train3/
+E.g., 
+  cd results
+  diff result_ship.json train3/result_ship.json
+  There will be some issues w/ numerical precision starting w/ the 3rd digit.
+E.g., .717... v .718...
+  new
+  < "[\n  {\n    \"name\": \"ship\",\n    \"class\": 1,\n    \"confidence\": 0.71787
+
+  old
+  > "[\n  {\n    \"name\": \"ship\",\n    \"class\": 1,\n    \"confidence\": 0.71837
 ````
 
 # UTA HPC
