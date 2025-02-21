@@ -22,6 +22,16 @@ python yolov9_fine_tune.py
 # results are written to results (see RESULT_IMG_BASE_PATH)
 ````
 
+# UTA HPC
+1. Use Ivanti VPN if you are off campus
+1. ssh ````<username>@hpcr8o2rnp.uta.edu````
+1. ````sbatch FineTune.slurm````
+
+    * You’ll see something like this  
+  ````Submitted batch job 14580````
+    * When it’s done, you’ll see two new files slurm-14580.err and slurm-14580.out  
+    * Those are the output of stderr and stdout.  Examine those and other files for the status of your job, results, etc.
+
 # When done
 ````conda deactivate````
 
