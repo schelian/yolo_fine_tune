@@ -25,7 +25,7 @@ RESULT_IMG_BASE_PATH = BASE_PATH + "results/"
 GOT_DATA = False # first run: False, after that: True (prevents getting the data again)
 #GOT_MODEL = True # first run: False, after that: True (prevents getting the model again)
 
-DO_TRAIN = False # first run: True, after that: False (prevents retraining)
+DO_TRAIN = True # first run: True, after that: False (prevents retraining)
 DO_TEST = True #
 DO_SAVE_RESULTS = True # turn off for more speed (e.g, if things are displayed on a video, etc.)
 

@@ -26,6 +26,15 @@ python yolov9_fine_tune.py
 Compare results to what's in results/naive_model.  There should be no ship or airplane detected
 
 ## Train/test model for 3 epochs
+
+### Training
+````
+in yolov9_fine_tune.py
+set GOT_DATA to False
+set DO_TRAIN to True
+````
+
+### Testing w/o training
 ````
 # unzip weights
 cd runs/detect/train3/weights/
@@ -33,6 +42,7 @@ unzip best.pt.zip
 
 Then go back to Test naive model
 Results will be written to results
+
 Compare (e.g., via diff) yolo_fine_tune/results and yolo_fine_tune/results/train3/
 E.g., 
   cd results
