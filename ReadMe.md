@@ -72,3 +72,11 @@ E.g., .717... v .718...
 # Going further
 ````conda env export --no-builds > environment.yml````  
 Check in your code
+
+# Notes
+If you need an interactive session (shell prompt) on a compute node, use command ````srun --partition=NAME --pty /bin/bash````, where partition NAME is an available partition.
+
+Partition names and availability can be found with the "sinfo" command. As of this email (Jan 21, 2025), we have NORMAL, LONG, SHORT, LOW and CHECK partitions. Our normal and long partition has the best hardware... NORMAL parition will run job for 8 days. LONG will run for 16 days. We also have SHORT and LOW partition... CHECK will allocate the next available compute node but is limited to 30 minutes of runtime.  
+* NB: the partitions are lowercase but they are written in uppercase to show that they are not the usual English words.
+
+See https://go.uta.edu/hpcinfo and "HPC Users Group" on MS Teams for more tips.

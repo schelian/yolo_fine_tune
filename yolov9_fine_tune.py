@@ -7,6 +7,7 @@ from zipfile import ZipFile
 import time
 import torch
 import json
+import argparse
 
 # constants
 NUM_EPOCHS = 3
@@ -70,7 +71,12 @@ def predict_img( img_fname, result_fname_prefix, DO_SAVE=True ):
 def download_and_unzip(url, save_path):
     print(f"Downloading and extracting assets....", end="")
     # Downloading zip file using urllib package.
-    urlretrieve(url, save_path)
+    #urlretrieve(url, save_path)
+    try:
+        urlretrieve(url, save_path)
+    except Exception as e:
+        print(f"Error: {e}")    
+
     try:
         # Extracting zip file using the zipfile package.
         with ZipFile(save_path) as z:
@@ -83,6 +89,24 @@ def download_and_unzip(url, save_path):
 URL = r"https://www.dropbox.com/scl/fi/36utqtkyfg7piqczxlmb3/SkyFusion-YOLOv9.zip?rlkey=c1801ghd40kzs0uk8d4bnelhg&dl=1"
 asset_zip_path = os.path.join(os.getcwd(), "Fine-Tuning-YOLOv9.zip")
 print( "cwd: " + os.getcwd() ) # goes to BASE_PATH
+
+"""## Parse arguments"""
+# region
+parser = argparse.ArgumentParser()
+parser.add_argument( "--num_epochs", default=NUM_EPOCHS, help="number of training epochs")
+parser.add_argument( "--got_data", default=GOT_DATA, help="do you have the training data?")
+parser.add_argument( "--do_train", default=DO_TRAIN, help="do training?")
+
+args = parser.parse_args()
+
+NUM_EPOCHS = args.num_epochs
+GOT_DATA = args.got_data
+DO_TRAIN = args.do_train
+
+print( f"NUM_EPOCHS: {NUM_EPOCHS}")
+print( f"GOT_DATA: {GOT_DATA}")
+print( f"DO_TRAIN: {DO_TRAIN}")
+# endregion
 
 """## Check if GPU is there"""
 # region
