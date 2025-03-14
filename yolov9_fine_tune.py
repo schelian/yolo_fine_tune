@@ -92,6 +92,9 @@ print( "cwd: " + os.getcwd() ) # goes to BASE_PATH
 
 """## Parse arguments"""
 # region
+print("*"*80)
+print( "setup start")
+
 parser = argparse.ArgumentParser()
 parser.add_argument( "--num_epochs", default=NUM_EPOCHS, help="number of training epochs")
 parser.add_argument( "--got_data", default=GOT_DATA, help="do you have the training data?")
@@ -116,31 +119,39 @@ if torch.cuda.is_available():
 else:
     device = "cpu"
     print("GPU is not available, CPU will be used")
-#endregion
 
-#region
 print("*"*80)
-print( "setup done")
+print( "setup end")
 #endregion
 
 """## Get data"""
 #region
+print("*"*80)
+print( "get data start")
+
 if ( not GOT_DATA ):
   download_and_unzip(URL, asset_zip_path)
   got_data = True
 # files end up in BASE_PATH/Fine-Tuning-YOLOv9.zip
+print("*"*80)
+print( "get data end")
 #endregion
 
 """## Define model"""
 #region
 # if you need more RAM, etc. first try the HPC or your computer
 # if that doesn't work, go with a smaller model such as 9m, 9s or 9t, and note which model you used in your submission
+print("*"*80)
+print( "define model start")
 model = YOLO('yolov9c.pt') # files end up in BASE_PATH, yolov9c.pt
+print("*"*80)
+print( "define model end")
 #endregion
 
 """## Baseline Training"""
 #region
-
+print("*"*80)
+print( "baseline training start")
 # each epoch on SJSU Colab, T4 (16 GB of RAM, GDDR6): 1 m, 50 seconds
 #  Turing Tensor Cores: 320
 #  CUDA Cores: 2560
@@ -165,6 +176,8 @@ if ( DO_TRAIN ):
   end_time = time.time()
   elapsed_time = end_time - start_time
   print(f"Time {elapsed_time:.2f} seconds")
+print("*"*80)
+print( "baseline training end")
 #endregion
 
 """## IGNORE -- Experiment 1: Freezing the Backbone + Learning Rate at 0.001 and Experiment 2: Freezing Backbone + Learning Rate at 0.01"""
@@ -187,7 +200,7 @@ if ( DO_TRAIN ):
 """## Testing"""
 #region
 print( "*"*80 )
-print( "Testing")
+print( "testing start")
 
 if ( DO_TEST ):
   print( f"loading {WT_PATH}" )
@@ -206,4 +219,6 @@ if ( DO_TEST ):
   img_fname = TE_IMG_BASE_PATH + SHIP_IMG_FNAME
   result_fname = RESULT_IMG_BASE_PATH + "result_ship"
   predict_img( img_fname, result_fname, DO_SAVE_RESULTS )
+print( "*"*80 )
+print( "testing end")
 #endregion
