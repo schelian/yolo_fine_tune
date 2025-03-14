@@ -118,6 +118,11 @@ else:
     print("GPU is not available, CPU will be used")
 #endregion
 
+#region
+print("*"*80)
+print( "setup done")
+#endregion
+
 """## Get data"""
 #region
 if ( not GOT_DATA ):

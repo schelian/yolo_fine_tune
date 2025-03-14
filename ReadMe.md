@@ -75,6 +75,7 @@ Check in your code
 
 # Notes
 If you need an interactive session (shell prompt) on a compute node, use command ````srun --partition=NAME --pty /bin/bash````, where partition NAME is an available partition.
+* Type ````exit```` when done.  Without doing this, common commands like ````git```` won't be there.
 
 Partition names and availability can be found with the "sinfo" command. As of this email (Jan 21, 2025), we have NORMAL, LONG, SHORT, LOW and CHECK partitions. Our normal and long partition has the best hardware... NORMAL parition will run job for 8 days. LONG will run for 16 days. We also have SHORT and LOW partition... CHECK will allocate the next available compute node but is limited to 30 minutes of runtime.  
 * NB: the partitions are lowercase but they are written in uppercase to show that they are not the usual English words.
