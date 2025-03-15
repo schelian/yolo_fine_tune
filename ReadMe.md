@@ -99,7 +99,7 @@ Check in your code
 
 # UTA HPC Steps
 1. Use Ivanti VPN if you are off campus
-1. ssh ````<username>@hpcr8o2rnp.uta.edu````
+1. ssh ````{username}@hpcr8o2rnp.uta.edu````
 1. ````sbatch FineTune.slurm````
 
     * You’ll see something like this:  ````Submitted batch job 14580````
@@ -116,5 +116,12 @@ Partition names and availability can be found with the ````sinfo```` command. As
 Nodes cannot download data, etc. from the internet.  You have to transfer data onto the cluster via sFTP.  
 
 See https://go.uta.edu/hpcinfo and "HPC Users Group" on MS Teams for more tips.
+
+## Slurm Notes
+````sinfo```` shows nodes and their status  
+
+````squeue -p {spartition}```` to see job status  (can add "|grep {username}")
+
+More here https://it.engineering.oregonstate.edu/hpc/slurm-howto
 
 
