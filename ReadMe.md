@@ -9,12 +9,25 @@ Now it's a set of code to do the same using the UTA HPC cluster, using technolog
 # First time
 ````conda create --name yolo_fine_tune -f environment.yml````
 
+## Needed on UTA HPC but not elsewhere
+````
+mkdir datasets
+cd datasets
+ln -s ../SkyFusion-YOLOv9
+# otherwise, it can't find the data
+
+Get the data on the cluster via sFTP.
+````
+
 # Every time
 
 ## Test naive model
 ````
 conda activate yolo_fine_tune
 python yolov9_fine_tune.py
+
+For UTA HPC:
+python yolov9_fine_tune.py --got_data=True
 
 # training images are read from SkyFusion-YOLOv9/train (see DAYA_YML_PATH)
 #   the code will download these
@@ -32,6 +45,27 @@ Compare results to what's in results/naive_model.  There should be no ship or ai
 in yolov9_fine_tune.py
 set GOT_DATA to False
 set DO_TRAIN to True
+````
+
+#### Notes on timing
+````
+Each training epoch
+
+On UTA HPC head node -- the job will be killed
+
+On CHECK node
+  
+
+On SJSU Colab, T4 (16 GB of RAM, GDDR6): 1 m, 50 seconds
+ Turing Tensor Cores: 320
+ CUDA Cores: 2560
+ Peak FP32 8.1 TFLOPs
+ More here: https://www.pny.com/nvidia-tesla-t4
+
+On laptop w/ NVIDIA GeForce RTX 4060 (8 GB of RAM, GDDR6): 18 minutes
+ CUDA cores: 96
+ Peak FP32 15.11 TFLOPs
+ More here: https://www.techpowerup.com/gpu-specs/geforce-rtx-4060.c4107
 ````
 
 ### Testing w/o training
@@ -55,17 +89,6 @@ E.g., .717... v .718...
   old
   > "[\n  {\n    \"name\": \"ship\",\n    \"class\": 1,\n    \"confidence\": 0.71837
 ````
-
-# UTA HPC
-1. Use Ivanti VPN if you are off campus
-1. ssh ````<username>@hpcr8o2rnp.uta.edu````
-1. ````sbatch FineTune.slurm````
-
-    * You’ll see something like this  
-  ````Submitted batch job 14580````
-    * When it’s done, you’ll see two new files slurm-14580.err and slurm-14580.out  
-    * Those are the output of stderr and stdout.  Examine those and other files for the status of your job, results, etc.
-
 # When done
 ````conda deactivate````
 
@@ -73,11 +96,25 @@ E.g., .717... v .718...
 ````conda env export --no-builds > environment.yml````  
 Check in your code
 
-# Notes
+
+# UTA HPC Steps
+1. Use Ivanti VPN if you are off campus
+1. ssh ````<username>@hpcr8o2rnp.uta.edu````
+1. ````sbatch FineTune.slurm````
+
+    * You’ll see something like this:  ````Submitted batch job 14580````
+    * When it’s done, you’ll see two new files ````slurm-14580.err```` and ````slurm-14580.out````  
+    * Those are the output of ````stderr```` and ````stdout````.  Examine those and other files for the status of your job, results, etc.
+
+## Notes
 If you need an interactive session (shell prompt) on a compute node, use command ````srun --partition=NAME --pty /bin/bash````, where partition NAME is an available partition.
 * Type ````exit```` when done.  Without doing this, common commands like ````git```` won't be there.
 
-Partition names and availability can be found with the "sinfo" command. As of this email (Jan 21, 2025), we have NORMAL, LONG, SHORT, LOW and CHECK partitions. Our normal and long partition has the best hardware... NORMAL parition will run job for 8 days. LONG will run for 16 days. We also have SHORT and LOW partition... CHECK will allocate the next available compute node but is limited to 30 minutes of runtime.  
+Partition names and availability can be found with the ````sinfo```` command. As of this email (Jan 21, 2025), we have NORMAL, LONG, SHORT, LOW and CHECK partitions. Our normal and long partition has the best hardware... NORMAL parition will run job for 8 days. LONG will run for 16 days. We also have SHORT and LOW partition... CHECK will allocate the next available compute node but is limited to 30 minutes of runtime.  
 * NB: the partitions are lowercase but they are written in uppercase to show that they are not the usual English words.
 
+Nodes cannot download data, etc. from the internet.  You have to transfer data onto the cluster via sFTP.  
+
 See https://go.uta.edu/hpcinfo and "HPC Users Group" on MS Teams for more tips.
+
+

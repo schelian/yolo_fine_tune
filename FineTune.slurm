@@ -7,5 +7,8 @@
 #SBATCH -o slurm-%j.out
 
 module purge > /dev/null 2>&1
+
+conda activate yolo_fine_tune
 python yolov9_fine_tune.py
+
 echo "Job Complete"
