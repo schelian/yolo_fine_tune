@@ -10,6 +10,8 @@ Now it's a set of code to do the same using the UTA HPC cluster, using technolog
 ````conda create --name yolo_fine_tune -f environment.yml````
 
 ## Needed on UTA HPC but not elsewhere
+Make sure you have access to ````cn-1e1901.shost.uta.edu````.
+
 ````
 mkdir datasets
 cd datasets
@@ -27,6 +29,8 @@ conda activate yolo_fine_tune
 python yolov9_fine_tune.py
 
 For UTA HPC:
+Log into VPN (Ivanti)  
+ssh -Y chelians@cn-1e1901.shost.uta.edu  
 python yolov9_fine_tune.py --got_data=True
 
 # training images are read from SkyFusion-YOLOv9/train (see DAYA_YML_PATH)
@@ -51,20 +55,26 @@ set DO_TRAIN to True
 ````
 Each training epoch
 
+On UTA GPU node, 4 A30's (24 GB of RAM):
+  Tensor cores: 224, Ada
+  CUDA Cores: 3804
+  Peak FP 32 TFLOPS: 5.2
+  More here: https://www.pny.com/nvidia-a30
+
 On UTA HPC head node -- the job will be killed
 
 On CHECK node
-  
+  No GPU, takes > 20 minutes :(
 
 On SJSU Colab, T4 (16 GB of RAM, GDDR6): 1 m, 50 seconds
- Turing Tensor Cores: 320
+ Tensor Cores: 320, Turing
  CUDA Cores: 2560
- Peak FP32 8.1 TFLOPs
+ Peak FP32 TFLOPs: 8.1
  More here: https://www.pny.com/nvidia-tesla-t4
 
 On laptop w/ NVIDIA GeForce RTX 4060 (8 GB of RAM, GDDR6): 18 minutes
  CUDA cores: 96
- Peak FP32 15.11 TFLOPs
+ Peak FP32 TFLOPs: 15.11
  More here: https://www.techpowerup.com/gpu-specs/geforce-rtx-4060.c4107
 ````
 
@@ -100,7 +110,7 @@ Check in your code
 # UTA HPC Steps
 1. Use Ivanti VPN if you are off campus
 1. ssh ````{username}@hpcr8o2rnp.uta.edu````
-1. ````sbatch FineTune.slurm````
+1. ````sbatch FineTune_check.slurm````
 
     * You’ll see something like this:  ````Submitted batch job 14580````
     * When it’s done, you’ll see two new files ````slurm-14580.err```` and ````slurm-14580.out````  
@@ -124,4 +134,6 @@ See https://go.uta.edu/hpcinfo and "HPC Users Group" on MS Teams for more tips.
 
 More here https://it.engineering.oregonstate.edu/hpc/slurm-howto
 
+tail the stdout file
 
+strace https://superuser.com/questions/473240/redirect-stdout-while-a-process-is-running-what-is-that-process-sending-to-d

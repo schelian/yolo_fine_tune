@@ -152,15 +152,7 @@ print( "define model end")
 #region
 print("*"*80)
 print( "baseline training start")
-# each epoch on SJSU Colab, T4 (16 GB of RAM, GDDR6): 1 m, 50 seconds
-#  Turing Tensor Cores: 320
-#  CUDA Cores: 2560
-#  Peak FP32 8.1 TFLOPs
-#  More here: https://www.pny.com/nvidia-tesla-t4
-# each epoch on laptop w/ NVIDIA GeForce RTX 4060 (8 GB of RAM, GDDR6): 18 minutes
-#  CUDA cores: 96
-#  Peak FP32 15.11 TFLOPs
-#  More here: https://www.techpowerup.com/gpu-specs/geforce-rtx-4060.c4107
+
 if ( DO_TRAIN ):
   start_time = time.time()
 
