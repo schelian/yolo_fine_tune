@@ -7,7 +7,7 @@ Originally a homework assignment to students to get an understanding of the fine
 Now it's a set of code to do the same using the UTA GPU cluster, and the UTA HPC cluster w/o GPUs (for this using technologies like Slurm, etc.).
 
 # First time
-````conda create --name yolo_fine_tune -f environment.yml````
+``pyth``conda env create --name yolo_fine_tune -f environment.yml````
 
 ## Needed on UTA GPU cluster but not elsewhere
 Make sure you have access to ````cn-1e1901.shost.uta.edu````.
@@ -19,6 +19,7 @@ ln -s ../SkyFusion-YOLOv9
 # otherwise, it can't find the data
 
 # Get the data on the cluster via sFTP.
+# The data is here: https://www.kaggle.com/datasets/pranavdurai/skyfusion-aerial-imagery-object-detection-dataset?resource=download
 ````
 
 # Every time
@@ -67,11 +68,19 @@ On UTA GPU node, 4 A30's (24 GB of RAM):
   CUDA Cores: 3804
   Peak FP 32 TFLOPS: 5.2
   More here: https://www.pny.com/nvidia-a30
-
+  
 On UTA HPC head node -- the job will be killed
 
 On CHECK node
   No GPU, takes > 20 minutes :(
+
+On AIS GPU server, GeForce RTX 4070 (12 GB of RAM)
+  TBD, ran out of memory
+  Tensor Cores: 184, Lovelace
+  CUDA Cores: 5888
+  RT Cores: 46
+  Peak TFLOPs: 29.15
+  More here: https://www.techpowerup.com/gpu-specs/geforce-rtx-4070.c3924
 
 On SJSU Colab, T4 (16 GB of RAM, GDDR6): 1 m, 50 seconds
  Tensor Cores: 320, Turing
@@ -79,7 +88,7 @@ On SJSU Colab, T4 (16 GB of RAM, GDDR6): 1 m, 50 seconds
  Peak FP32 TFLOPs: 8.1
  More here: https://www.pny.com/nvidia-tesla-t4
 
-On laptop w/ NVIDIA GeForce RTX 4060 (8 GB of RAM, GDDR6): 18 minutes
+On laptop, GeForce RTX 4060 (8 GB of RAM, GDDR6): 18 minutes
  CUDA cores: 96
  Peak FP32 TFLOPs: 15.11
  More here: https://www.techpowerup.com/gpu-specs/geforce-rtx-4060.c4107
