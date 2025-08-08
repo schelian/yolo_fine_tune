@@ -46,9 +46,16 @@ Compare results to what's in results/naive_model.  There should be no ship or ai
 
 ### Training
 ````
-in yolov9_fine_tune.py
-set GOT_DATA to False
-set DO_TRAIN to True
+#in yolov9_fine_tune.py
+#set GOT_DATA to False
+#set DO_TRAIN to True
+
+python yolov9_fine_tune.py
+````
+
+If the GPU runs out of memory, and there is more than one GPU available, try this:
+````
+CUDA_AVAILABLE_DEVICES=2; python yolov9_fine_tune.py --gpu_number=2
 ````
 
 #### Notes on timing
