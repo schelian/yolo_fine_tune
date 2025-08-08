@@ -149,8 +149,11 @@ print( "get data end")
 # if that doesn't work, go with a smaller model such as 9m, 9s or 9t, and note which model you used in your submission
 print("*"*80)
 print( "define model start")
-model.to(device) # may not be GPU 0
+gpu_num = torch.cuda.current_device()
+print(f"Current GPU number: {gpu_num}")
+
 model = YOLO('yolov9c.pt') # files end up in BASE_PATH, yolov9c.pt
+model.to(device) # may not be GPU 0
 print("*"*80)
 print( "define model end")
 #endregion
