@@ -4,12 +4,12 @@ Fine tuning a YOLOv9 model.
 
 Originally a homework assignment to students to get an understanding of the fine tuning process.  (The outline of the code was originally taken from https://learnopencv.com/fine-tuning-yolov9/.)
 
-Now it's a set of code to do the same using the UTA HPC cluster, using technologies like Slurm, etc.
+Now it's a set of code to do the same using the UTA GPU cluster, and the UTA HPC cluster w/o GPUs (for this using technologies like Slurm, etc.).
 
 # First time
 ````conda create --name yolo_fine_tune -f environment.yml````
 
-## Needed on UTA HPC but not elsewhere
+## Needed on UTA GPU cluster but not elsewhere
 Make sure you have access to ````cn-1e1901.shost.uta.edu````.
 
 ````
@@ -18,7 +18,7 @@ cd datasets
 ln -s ../SkyFusion-YOLOv9
 # otherwise, it can't find the data
 
-Get the data on the cluster via sFTP.
+# Get the data on the cluster via sFTP.
 ````
 
 # Every time
@@ -28,7 +28,7 @@ Get the data on the cluster via sFTP.
 conda activate yolo_fine_tune
 python yolov9_fine_tune.py
 
-For UTA HPC:
+For UTA GPU cluster:
 Log into VPN (Ivanti)  
 ssh -Y chelians@cn-1e1901.shost.uta.edu  
 python yolov9_fine_tune.py --got_data=True

@@ -99,16 +99,19 @@ parser = argparse.ArgumentParser()
 parser.add_argument( "--num_epochs", default=NUM_EPOCHS, help="number of training epochs")
 parser.add_argument( "--got_data", default=GOT_DATA, help="do you have the training data?")
 parser.add_argument( "--do_train", default=DO_TRAIN, help="do training?")
+parser.add_argument( "--gpu_number", default=0, help="which GPU?")
 
 args = parser.parse_args()
 
 NUM_EPOCHS = args.num_epochs
 GOT_DATA = args.got_data
 DO_TRAIN = args.do_train
+GPU_NUMBER = args.gpu_number
 
 print( f"NUM_EPOCHS: {NUM_EPOCHS}")
 print( f"GOT_DATA: {GOT_DATA}")
 print( f"DO_TRAIN: {DO_TRAIN}")
+print( f"GPU_NUMBER: {GPU_NUMBER}")
 # endregion
 
 """## Check if GPU is there"""
@@ -116,10 +119,13 @@ print( f"DO_TRAIN: {DO_TRAIN}")
 if torch.cuda.is_available():
     device = "cuda"
     print("GPU is available")
+    my_str = "cuda:" + str(GPU_NUMBER)
+    device = torch.device(my_str) 
+    print(f"Using GPU: {device}")
 else:
     device = "cpu"
     print("GPU is not available, CPU will be used")
-
+    
 print("*"*80)
 print( "setup end")
 #endregion
