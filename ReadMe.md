@@ -7,7 +7,7 @@ Originally a homework assignment to students to get an understanding of the fine
 Now it's a set of code to do the same using the UTA GPU cluster, and the UTA HPC cluster w/o GPUs (for this using technologies like Slurm, etc.).
 
 # First time
-``pyth``conda env create --name yolo_fine_tune -f environment.yml````
+````conda env create --name yolo_fine_tune -f environment.yml````
 
 ## Needed on UTA GPU cluster but not elsewhere
 Make sure you have access to ````cn-1e1901.shost.uta.edu````.
@@ -74,13 +74,16 @@ On UTA HPC head node -- the job will be killed
 On CHECK node
   No GPU, takes > 20 minutes :(
 
-On AIS GPU server, GeForce RTX 4070 (12 GB of RAM)
+On AIS GPU server, GeForce RTX 4070 (12 GB of RAM): 5 m, 32 s (GPU 0 was at 67% memory)
   TBD, ran out of memory
   Tensor Cores: 184, Lovelace
   CUDA Cores: 5888
   RT Cores: 46
   Peak TFLOPs: 29.15
   More here: https://www.techpowerup.com/gpu-specs/geforce-rtx-4070.c3924
+
+On laptop, 
+https://www.notebookcheck.net/NVIDIA-RTX-A2000-Laptop-GPU-GPU-Benchmarks-and-Specs.532536.0.html
 
 On SJSU Colab, T4 (16 GB of RAM, GDDR6): 1 m, 50 seconds
  Tensor Cores: 320, Turing
@@ -91,7 +94,7 @@ On SJSU Colab, T4 (16 GB of RAM, GDDR6): 1 m, 50 seconds
 On laptop, GeForce RTX 4060 (8 GB of RAM, GDDR6): 18 minutes
  CUDA cores: 96
  Peak FP32 TFLOPs: 15.11
- More here: https://www.techpowerup.com/gpu-specs/geforce-rtx-4060.c4107
+ More here: https://www.techpowerup.com/gpu-specs/geforce-rtx-4060.c3946
 ````
 
 ### Testing w/o training

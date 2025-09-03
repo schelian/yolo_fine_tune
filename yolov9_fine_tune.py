@@ -38,7 +38,7 @@ def predict_img( img_fname, result_fname_prefix, DO_SAVE=True ):
 
   # https://docs.ultralytics.com/modes/predict/#images
   # Run batched inference on a list of images
-  print( f"predicting on {img_fname}")
+  print( f"predicting on {img_fname}" )
   results = model( img_fname )  # return a list of Results objects
 
   # Process results list
@@ -92,8 +92,8 @@ print( "cwd: " + os.getcwd() ) # goes to BASE_PATH
 
 """## Parse arguments"""
 # region
-print("*"*80)
-print( "setup start")
+print( "*"*80 )
+print( "setup start" )
 
 parser = argparse.ArgumentParser()
 parser.add_argument( "--num_epochs", default=NUM_EPOCHS, help="number of training epochs")
@@ -108,60 +108,60 @@ GOT_DATA = args.got_data
 DO_TRAIN = args.do_train
 GPU_NUMBER = args.gpu_number
 
-print( f"NUM_EPOCHS: {NUM_EPOCHS}")
-print( f"GOT_DATA: {GOT_DATA}")
-print( f"DO_TRAIN: {DO_TRAIN}")
-print( f"GPU_NUMBER: {GPU_NUMBER}")
+print( f"NUM_EPOCHS: {NUM_EPOCHS}" )
+print( f"GOT_DATA: {GOT_DATA}" )
+print( f"DO_TRAIN: {DO_TRAIN}" )
+print( f"GPU_NUMBER: {GPU_NUMBER}" )
 # endregion
 
 """## Check if GPU is there"""
 # region
 if torch.cuda.is_available():
     device = "cuda"
-    print("GPU is available")
+    print( "GPU is available" )
     my_str = "cuda:" + str(GPU_NUMBER)
     device = torch.device(my_str) 
-    print(f"Using GPU: {device}")
+    print( f"Using GPU: {device}" )
 else:
     device = "cpu"
-    print("GPU is not available, CPU will be used")
+    print( "GPU is not available, CPU will be used" )
     
-print("*"*80)
-print( "setup end")
+print( "*"*80 )
+print( "setup end" )
 #endregion
 
 """## Get data"""
 #region
-print("*"*80)
-print( "get data start")
+print( "*"*80 )
+print( "get data start" )
 
 if ( not GOT_DATA ):
   download_and_unzip(URL, asset_zip_path)
   got_data = True
 # files end up in BASE_PATH/Fine-Tuning-YOLOv9.zip
-print("*"*80)
-print( "get data end")
+print( "*"*80 )
+print( "get data end\n" )
 #endregion
 
 """## Define model"""
 #region
 # if you need more RAM, etc. first try the HPC or your computer
 # if that doesn't work, go with a smaller model such as 9m, 9s or 9t, and note which model you used in your submission
-print("*"*80)
-print( "define model start")
+print( "*"*80 )
+print( "define model start" )
 gpu_num = torch.cuda.current_device()
-print(f"Current GPU number: {gpu_num}")
+print( f"Current GPU number: {gpu_num}" )
 
 model = YOLO('yolov9c.pt') # files end up in BASE_PATH, yolov9c.pt
 model.to(device) # may not be GPU 0
-print("*"*80)
-print( "define model end")
+print( "*"*80 )
+print( "define model end\n" )
 #endregion
 
 """## Baseline Training"""
 #region
-print("*"*80)
-print( "baseline training start")
+print( "*"*80 )
+print( "baseline training start" )
 
 if ( DO_TRAIN ):
   start_time = time.time()
@@ -178,8 +178,8 @@ if ( DO_TRAIN ):
   end_time = time.time()
   elapsed_time = end_time - start_time
   print(f"Time {elapsed_time:.2f} seconds")
-print("*"*80)
-print( "baseline training end")
+print( "*"*80 )
+print( "baseline training end\n" )
 #endregion
 
 """## IGNORE -- Experiment 1: Freezing the Backbone + Learning Rate at 0.001 and Experiment 2: Freezing Backbone + Learning Rate at 0.01"""
@@ -202,7 +202,7 @@ print( "baseline training end")
 """## Testing"""
 #region
 print( "*"*80 )
-print( "testing start")
+print( "testing start" )
 
 if ( DO_TEST ):
   print( f"loading {WT_PATH}" )
@@ -222,5 +222,5 @@ if ( DO_TEST ):
   result_fname = RESULT_IMG_BASE_PATH + "result_ship"
   predict_img( img_fname, result_fname, DO_SAVE_RESULTS )
 print( "*"*80 )
-print( "testing end")
+print( "testing end\n" )
 #endregion
