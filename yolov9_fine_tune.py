@@ -56,6 +56,7 @@ def predict_img( img_fname, result_fname_prefix, DO_SAVE=True ):
         #results_save.append( boxes.data )
 
         result.show()  # display to screen
+        # @todo will give an error msg. on a remote terminal; can try: https://docs.ultralytics.com/guides/view-results-in-terminal/
         print( f"saving results to {result_fname_prefix}"+".png")
         result.save(filename=result_fname_prefix+".png")  # save to disk
 
@@ -166,8 +167,8 @@ print( "baseline training start" )
 if ( DO_TRAIN ):
   start_time = time.time()
 
-  if ( device != 'cpu' ):
-     device = 0
+  #if ( device != 'cpu' ):
+  #   device = 0
 
   results = model.train(data=DATA_YML_PATH, epochs=NUM_EPOCHS, imgsz=640, device=device) # https://docs.ultralytics.com/modes/train/#train-settings
   # After training on a custom dataset,

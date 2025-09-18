@@ -9,9 +9,7 @@ Now it's a set of code to do the same using the UTA GPU cluster, and the UTA HPC
 # First time
 ````conda env create --name yolo_fine_tune -f environment.yml````
 
-## Needed on UTA GPU cluster but not elsewhere
-Make sure you have access to ````cn-1e1901.shost.uta.edu````.
-
+## Often needed but sometimes not
 ````
 mkdir datasets
 cd datasets
@@ -22,6 +20,9 @@ ln -s ../SkyFusion-YOLOv9
 # The data is here: https://www.kaggle.com/datasets/pranavdurai/skyfusion-aerial-imagery-object-detection-dataset?resource=download
 ````
 
+## For UTA GPU cluster
+Make sure you have access to ````cn-1e1901.shost.uta.edu````.
+
 # Every time
 
 ## Test naive model
@@ -31,7 +32,7 @@ python yolov9_fine_tune.py
 
 For UTA GPU cluster:
 Log into VPN (Ivanti)  
-ssh -Y chelians@cn-1e1901.shost.uta.edu  
+ssh -Y <netID>@cn-1e1901.shost.uta.edu  
 python yolov9_fine_tune.py --got_data=True
 
 # training images are read from SkyFusion-YOLOv9/train (see DAYA_YML_PATH)
@@ -56,34 +57,46 @@ python yolov9_fine_tune.py
 
 If the GPU runs out of memory, and there is more than one GPU available, try this:
 ````
-CUDA_AVAILABLE_DEVICES=2; python yolov9_fine_tune.py --gpu_number=2
+CUDA_AVAILABLE_DEVICES=1; python yolov9_fine_tune.py --gpu_number=1
+# GPUs are counted started at 0
 ````
 
 #### Notes on timing
 ````
-Each training epoch
+Each training epoch.
+This is using the the timing statements in the code, not "time <cmd>" -- that would include time to download data, etc.
 
 On UTA GPU node, 4 A30's (24 GB of RAM):
   Tensor cores: 224, Ada
   CUDA Cores: 3804
   Peak FP 32 TFLOPS: 5.2
   More here: https://www.pny.com/nvidia-a30
+
+  Often you will get an out of memory error.
   
 On UTA HPC head node -- the job will be killed
 
-On CHECK node
+On UTA HPC CHECK node
   No GPU, takes > 20 minutes :(
 
-On AIS GPU server, GeForce RTX 4070 (12 GB of RAM): 5 m, 32 s (GPU 0 was at 67% memory)
-  TBD, ran out of memory
+On AIS GPU server, 
+  GeForce RTX 4070 Super (12 GB of RAM): 1 m, 33 s*
+  * Was getting: "WARNING: CUDA OutOfMemoryError in TaskAlignedAssigner, using CPU"
+  Tensor Cores: 224, Lovelace
+  CUDA Cores: 7168
+  RT Cores: 56
+  Peak FP32 TFLOPs: 35.4
+  More here: https://www.techpowerup.com/gpu-specs/geforce-rtx-4070-super.c4186, https://postperspective.com/review-nvidia-rtx-4070-super-founders-edition/
+
+  GeForce RTX 4070 (12 GB of RAM):
   Tensor Cores: 184, Lovelace
   CUDA Cores: 5888
   RT Cores: 46
-  Peak TFLOPs: 29.15
+  Peak FP32 TFLOPs: 29.15
   More here: https://www.techpowerup.com/gpu-specs/geforce-rtx-4070.c3924
 
-On laptop, 
-https://www.notebookcheck.net/NVIDIA-RTX-A2000-Laptop-GPU-GPU-Benchmarks-and-Specs.532536.0.html
+On Suhas' UTARI Dell laptop:
+  More here: https://www.notebookcheck.net/NVIDIA-RTX-A2000-Laptop-GPU-GPU-Benchmarks-and-Specs.532536.0.html
 
 On SJSU Colab, T4 (16 GB of RAM, GDDR6): 1 m, 50 seconds
  Tensor Cores: 320, Turing
@@ -91,7 +104,7 @@ On SJSU Colab, T4 (16 GB of RAM, GDDR6): 1 m, 50 seconds
  Peak FP32 TFLOPs: 8.1
  More here: https://www.pny.com/nvidia-tesla-t4
 
-On laptop, GeForce RTX 4060 (8 GB of RAM, GDDR6): 18 minutes
+On Suhas' HP laptop, GeForce RTX 4060 (8 GB of RAM, GDDR6): 18 minutes
  CUDA cores: 96
  Peak FP32 TFLOPs: 15.11
  More here: https://www.techpowerup.com/gpu-specs/geforce-rtx-4060.c3946
@@ -128,7 +141,7 @@ Check in your code
 
 # UTA HPC Steps
 1. Use Ivanti VPN if you are off campus
-1. ssh ````{username}@hpcr8o2rnp.uta.edu````
+1. ssh ````{netID}@hpcr8o2rnp.uta.edu````
 1. ````sbatch FineTune_check.slurm````
 
     * You’ll see something like this:  ````Submitted batch job 14580````
